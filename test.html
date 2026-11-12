@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster - Test ishlash</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="logo">TestMaster</div>
+    <a href="/">Bosh sahifa</a>
+</header>
+
+<div class="quiz-container">
+    <h1>Test ishlash</h1>
+    <p>Avval ism va familiyangizni kiriting.</p>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="ism"
+            placeholder="Ism va familiyangiz"
+            required
+            maxlength="100"
+            autocomplete="name"
+            style="width:100%;padding:14px;margin:20px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;"
+        >
+
+        {% for savol in savollar %}
+        {% set raqam = loop.index0 %}
+
+        <div class="question">
+            <h3>{{ loop.index }}. {{ savol.savol }}</h3>
+
+            {% for variant in savol.variantlar %}
+            <label class="option">
+                <input
+                    type="radio"
+                    name="{{ raqam }}"
+                    value="{{ variant[0] }}"
+                    required
+                >
+                {{ variant }}
+            </label>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn">
+            Testni yakunlash
+        </button>
+
+    </form>
+</div>
+
+</body>
+</html>
