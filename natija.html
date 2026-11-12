@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestMaster - Test natijasi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="logo">TestMaster</div>
+    <a href="/">Bosh sahifa</a>
+</header>
+
+<div class="result-container">
+
+    <h1>Test yakunlandi!</h1>
+
+    <h2>{{ natija.ism }}</h2>
+
+    <div class="score">
+        {{ natija.togri }} / {{ natija.jami }}
+    </div>
+
+    <p>To‘g‘ri javoblar: {{ natija.togri }}</p>
+    <p>Noto‘g‘ri javoblar: {{ natija.jami - natija.togri }}</p>
+
+    <p>
+        Natija:
+        {% if natija.jami > 0 %}
+            {{ (natija.togri / natija.jami * 100)|round|int }}%
+        {% else %}
+            0%
+        {% endif %}
+    </p>
+
+    <hr>
+
+    <h2>Savollar tahlili</h2>
+
+    {% for item in tahlil %}
+    <div class="question">
+        <h3>{{ loop.index }}. {{ item.savol }}</h3>
+
+        <p>Mavzu: {{ item.mavzu }}</p>
+
+        <p>
+            Sizning javobingiz:
+            {% if item.tanlangan %}
+                {{ item.tanlangan }}
+            {% else %}
+                Javob berilmagan
+            {% endif %}
+        </p>
+
+        <p>To‘g‘ri javob: {{ item.togri }}</p>
+
+        {% if item.xato %}
+            <p style="color:red;">Noto‘g‘ri javob!</p>
+        {% else %}
+            <p style="color:green;">To‘g‘ri javob!</p>
+        {% endif %}
+
+        <p>Izoh: {{ item.izoh }}</p>
+    </div>
+    {% endfor %}
+
+    <a href="/test" class="btn">Qayta test ishlash</a>
+    <a href="/" class="btn">Bosh sahifa</a>
+
+</div>
+
+</body>
+</html>
